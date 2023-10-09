@@ -1,0 +1,167 @@
+swagger: '2.0'
+info:
+  title: Checkings Account API
+  version: 1.0.0
+  description: API for managing checkings accounts
+paths:
+  /listTransaction:
+    get:
+      summary: Displays transactions
+      description: Retrieves all transactions for a given account
+      parameters:
+        - name: accountId
+          in: query
+          description: Account number needed to list transactions
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Successfully displayed transactions
+          schema:
+            type: array
+            items:
+              type: object
+              properties:
+                transactionId:
+                  type: integer
+                  format: int64
+                  description: The ID of a transaction
+                date:
+                  type: string
+                  description: The date on which the transaction occurred
+                amount:
+                  type: number
+                  format: double
+                  description: The total amount of the transaction
+                transactionType:
+                  type: string
+                  description: What type the transaction falls into
+                comment:
+                  type: string
+                  description: Describing the transaction further if needed
+
+  /createAccount:
+    post:
+      summary: Create a new checkings account
+      parameters:
+        - name: customerName
+          in: formData
+          description: Customer's name
+          required: true
+          type: string
+        - name: personID
+          in: formData
+          description: Unique person ID
+          required: true
+          type: string
+        - name: stateofResidence
+          in: formData
+          description: State of residence
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Checkings account successfully created.
+          schema:
+            type: object
+            properties:
+              accountId:
+                type: integer
+                format: int64
+
+  /updateAccount:
+    patch:
+      summary: Deposits into accounts
+      description: Apply debits or credits to an account
+      parameters:
+        - name: accountId
+          in: query
+          description: Account number needed to list transactions
+          required: true
+          type: integer
+          format: int64
+        - name: amount
+          in: formData
+          description: Total amount needed to apply to the account
+          required: true
+          type: number
+          format: double
+        - name: transactionType
+          in: formData
+          description: Debit or Credit type
+          required: true
+          type: string
+        - name: comment
+          in: formData
+          description: Describes what the transaction is related to
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successfully deposited into the account
+          schema:
+            type: object
+            properties:
+              transactionId:
+                type: integer
+                format: int64
+                description: The ID of a transaction
+              accountBalance:
+                type: number
+                format: double
+                description: The total balance of the account
+
+  /listAccount:
+    get:
+      summary: List all checking accounts.
+      responses:
+        '200':
+          schema:
+            type: array
+            description: Displays a list of all accounts
+            items:
+              type: object
+              properties:
+                customerName:
+                  type: string
+                  description: Name of the customer on the account
+                customerId:
+                  type: integer
+                  format: int64
+                  description: The ID of the customer
+                accountNum:
+                  type: integer
+                  format: int64
+                  description: The number of the account
+                statusAccount:
+                  type: string
+                  description: States whether the account is active or not
+                registeredDate:
+                  type: string
+                  description: States the date on which the account was opened
+                accountBalance:
+                  type: number
+                  format: double
+                  description: The total balance of the account
+
+  /deactivateAccount:
+    put:
+      summary: Deactivate an account
+      parameters:
+        - name: accountNum
+          in: formData
+          description: Account number to deactivate
+          required: true
+          type: integer
+          format: int64
+      responses:
+        '200':
+          description: Successfully deactivated account
+          schema:
+            type: object
+            properties:
+              activeFlag:
+                type: boolean
+                description: Has been set to false to deactivate the account
+

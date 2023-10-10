@@ -1,4 +1,4 @@
-# checkingsAPI
+# checkingsAPI Design
 
 Endpoints:
 1. Create an account. = {in: customer name, person-id, state of residence; out: account_num} person-id must be unique

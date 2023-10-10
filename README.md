@@ -31,10 +31,8 @@ Converting an account into a struct to store information about the customer:
 Create a transaction struct:
 -	TransactionAmount: float
 -	TransactionType: string (deposit, withdrawal)
--	TransactionCard: string (Credit/debit)
 -	TransactionID: Int
 -	TransactionDate: String or time.Time
--	TransactionStatus: String (pending, processed)
 -	Comment: String
 
 Storing all checking accounts:
@@ -42,11 +40,20 @@ Utilizing slices of struct to hold account structs
 Once program has been close, it will wipe slices clean of previous data
 Since we are utilizing slices, if serialization was to be implemented then it would be perfect for creating a parser to save data onto a file.
 
-Future Error Handling: 
--	TransactionDate: Cannot be >30 dats
--	TransactionAmount: Cannot be < 0
--	Person ID: Must be unique
+Handling statuses of accounts:
+-   	Utilizing a switch case statement will allow easier handling of activation and deactivation
+    -   As well as any future status that will be implemented
+-   	Helper function(s) for more readability (Possibly for the future)
+ 
 
-Future versioning:
--	Changes and updates to the software can be used as versions in order to not disrupt consumer processes, such as transactions, history, etc.
-
+Future Error Handling:
+-   	TransactionDate: Cannot be >30 dats
+-   	TransactionAmount: Cannot be < 0
+-   	Handle Person ID: Must be unique
+    -   Message could be “this ID is already in use” or “this ID is not valid”
+    -   Check on person ID length, variable type, etc.
+-   	Handling negative transaction amounts
+    -   If a transaction amount is negative, add this to the balance as this is a deposit, and declare as such
+-   	Handle negative balance
+    -   Check funds before processing withdrawal/deposit
+    -  Give an no available balance error when attempting a withdrawal 
